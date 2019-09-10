@@ -9,13 +9,11 @@
   </head>
   <body>
     <div id = 'root'></div>
-    <form>
-      <input name='name'/>
-      <button>Sign In</button>
-    </form>
+
     <script type = 'text/babel'>
 
     const { Component } = React;
+    const { render } = ReactDOM;
     const root = document.querySelector('#root');
 
     class App extends Component {
@@ -32,11 +30,19 @@
       render() {
         const { guests } = this.state;
         return (
+          <div>
+            <form onSubmit = { ev => ev.preventDefault() }>
+            <input value={ guests } placeholder='write name' onChange={ (ev)=> this.setState({ guests: ev.target.value }) }/>
+            <button disabled={ !guests } >Sign In</button>
+          </form>
           <ul>
             {
               guests.map( guest => <li key= {guest.id }>{ guest.name }</li> )
             }
           </ul>
+
+        </div>
+
         )
       }
     }
