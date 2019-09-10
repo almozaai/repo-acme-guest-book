@@ -12,11 +12,20 @@ const readFile = (file) => {
   });
 }
 
+const readFileJSON = async(file) => {
+  const jsonString = await readFile(file);
+  return JSON.parse(jsonString);
+}
+
 const server = http.createServer( async (req, res)=> {
   try {
-    if(req.url=== '/') {
+    if(req.url === '/') {
       const html = await readFile('./index.html');
       res.write(html);
+      res.end();
+    } else if (req.url === '/api/guests') {
+      const guests = await readFileJSON('./guests.json');
+      res.write(guests);
       res.end();
     }
   }
